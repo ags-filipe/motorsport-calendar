@@ -1,0 +1,178 @@
+
+<h2 class="sr-only">2026 motorsport calendar with UK broadcaster filters — IndyCar, WEC, IMSA, GT World Challenge, IGTC and ELMS — filterable by series and where to watch in the UK</h2>
+
+<div style="font-family:var(--font-sans);padding:4px 0 16px;">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+    <div id="stats" style="font-size:12px;color:var(--color-text-secondary);"></div>
+    <button onclick="toggleAllS()" style="font-size:11px;padding:3px 8px;cursor:pointer;border-radius:99px;border:0.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);font-family:var(--font-sans);">all / none</button>
+  </div>
+
+  <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-text-tertiary);margin-bottom:5px;">Series</div>
+  <div id="sf" style="display:flex;flex-wrap:wrap;gap:5px;padding-bottom:10px;margin-bottom:8px;border-bottom:0.5px solid var(--color-border-tertiary);"></div>
+
+  <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-text-tertiary);margin-bottom:5px;">Watch in UK</div>
+  <div id="wf" style="display:flex;flex-wrap:wrap;gap:5px;padding-bottom:12px;margin-bottom:4px;border-bottom:0.5px solid var(--color-border-tertiary);"></div>
+
+  <div id="calendar"></div>
+</div>
+
+<script>
+const S={INDYCAR:{label:"IndyCar",c:"#c87818"},WEC:{label:"WEC",c:"#2080cc"},IMSA:{label:"IMSA",c:"#2a9020"},GTWCE:{label:"GT WC Europe",c:"#c02828"},GTWCA:{label:"GT WC America",c:"#c04e0a"},IGTC:{label:"IGTC",c:"#7038c8"},ELMS:{label:"ELMS",c:"#0a8888"}};
+const W={sky:{label:"Sky / NOW TV",c:"#0062b3",icon:"ti-device-tv",url:"https://www.sky.com/shop/tv/sports"},tnt:{label:"TNT / discovery+",c:"#d95f00",icon:"ti-player-play",url:"https://www.tntsports.co.uk"},yt:{label:"Free · YouTube",c:"#bb2200",icon:"ti-brand-youtube",url:null},fiawec:{label:"FIAWEC+",c:"#1a4a8a",icon:"ti-player-play",url:"https://plus.fiawec.com"}};
+const SW={INDYCAR:["sky"],WEC:["tnt","fiawec"],IMSA:["yt"],GTWCE:["sky","yt"],GTWCA:["yt"],IGTC:["yt"],ELMS:["tnt","yt","fiawec"]};
+const SYT={IMSA:"https://www.youtube.com/@IMSA",GTWCE:"https://www.youtube.com/@GTWorld",GTWCA:"https://www.youtube.com/@GTWorld",IGTC:"https://www.youtube.com/@GTWorld",ELMS:"https://www.youtube.com/@EuropeanLeMansSeriesOfficial"};
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+const R=[
+  {m:0,d:"Jan 21–25",s:["IMSA"],n:"Rolex 24 at Daytona",v:"Daytona International Speedway, FL",t:"24H",done:1},
+  {m:1,d:"Feb 13–15",s:["IGTC"],n:"Bathurst 12 Hour",v:"Mount Panorama, AUS",t:"12H",done:1},
+  {m:2,d:"Mar 1",s:["INDYCAR"],n:"Firestone GP of St. Petersburg",v:"St. Petersburg, FL",done:1},
+  {m:2,d:"Mar 7",s:["INDYCAR"],n:"Good Ranchers 250",v:"Phoenix Raceway, AZ",t:"Oval",done:1},
+  {m:2,d:"Mar 15",s:["INDYCAR"],n:"Grand Prix of Arlington",v:"Streets of Arlington, TX",done:1},
+  {m:2,d:"Mar 18–21",s:["IMSA"],n:"12 Hours of Sebring",v:"Sebring International Raceway, FL",t:"12H",done:1},
+  {m:2,d:"Mar 27–29",s:["GTWCA"],n:"Sonoma",v:"Sonoma Raceway, CA",done:1},
+  {m:2,d:"Mar 29",s:["INDYCAR"],n:"Alabama Indy Grand Prix",v:"Barber Motorsports Park, AL",done:1},
+  {m:3,d:"Apr 10–12",s:["GTWCE"],n:"Paul Ricard",v:"Le Castellet, FRA",t:"Sprint + 6H",done:1},
+  {m:3,d:"Apr 12",s:["ELMS"],n:"4 Hours of Barcelona",v:"Circuit de Barcelona-Catalunya",t:"4H",done:1},
+  {m:3,d:"Apr 17–18",s:["IMSA"],n:"Grand Prix of Long Beach",v:"Long Beach, CA",done:1},
+  {m:3,d:"Apr 19",s:["INDYCAR"],n:"Acura Grand Prix of Long Beach",v:"Long Beach, CA",done:1},
+  {m:3,d:"Apr 19",s:["WEC"],n:"6 Hours of Imola",v:"Imola, ITA",t:"6H",done:1},
+  {m:3,d:"Apr 24–26",s:["GTWCA"],n:"Circuit of the Americas",v:"Austin, TX",done:1},
+  {m:4,d:"May 1–3",s:["IMSA"],n:"Laguna Seca",v:"WeatherTech Raceway, CA",done:1},
+  {m:4,d:"May 2–3",s:["GTWCE"],n:"Brands Hatch",v:"Brands Hatch, GBR",t:"Sprint",done:1},
+  {m:4,d:"May 3",s:["ELMS"],n:"4 Hours of Le Castellet",v:"Circuit Paul Ricard, FRA",t:"4H",done:1},
+  {m:4,d:"May 7–9",s:["WEC"],n:"6 Hours of Spa-Francorchamps",v:"Spa-Francorchamps, BEL",t:"6H",done:1},
+  {m:4,d:"May 8–10",s:["GTWCA"],n:"Sebring",v:"Sebring International Raceway, FL",done:1},
+  {m:4,d:"May 9",s:["INDYCAR"],n:"Sonsio Grand Prix",v:"Indianapolis Road Course, IN",done:1},
+  {m:4,d:"May 14–17",s:["IGTC"],n:"Nürburgring 24 Hours",v:"Nürburgring Nordschleife, GER",t:"24H",done:1},
+  {m:4,d:"May 24",s:["INDYCAR"],n:"Indianapolis 500",v:"Indianapolis Motor Speedway, IN",t:"500mi",done:1},
+  {m:4,d:"May 28–31",s:["GTWCE"],n:"Monza",v:"Autodromo Nazionale Monza, ITA",t:"Sprint + 3H",done:1},
+  {m:4,d:"May 29–30",s:["IMSA"],n:"Detroit Grand Prix",v:"Detroit Street Circuit, MI",done:1},
+  {m:4,d:"May 31",s:["INDYCAR"],n:"Chevrolet Detroit Grand Prix",v:"Detroit Street Circuit, MI",done:1},
+  {m:5,d:"Jun 7",s:["INDYCAR"],n:"Bommarito Automotive Group 500",v:"WWT Raceway, Madison IL",t:"Oval"},
+  {m:5,d:"Jun 10–14",s:["WEC"],n:"24 Hours of Le Mans",v:"Circuit de la Sarthe, FRA",t:"24H"},
+  {m:5,d:"Jun 12–14",s:["GTWCA"],n:"Road Atlanta",v:"Road Atlanta, GA"},
+  {m:5,d:"Jun 25–28",s:["IGTC","GTWCE"],n:"CrowdStrike 24 Hours of Spa",v:"Spa-Francorchamps, BEL",t:"24H"},
+  {m:5,d:"Jun 25–28",s:["IMSA"],n:"Watkins Glen 6 Hours",v:"Watkins Glen International, NY",t:"6H"},
+  {m:6,d:"Jul 5",s:["INDYCAR"],n:"Honda Indy 200 at Mid-Ohio",v:"Mid-Ohio Sports Car Course, OH"},
+  {m:6,d:"Jul 5",s:["ELMS"],n:"4 Hours of Imola",v:"Imola, ITA",t:"4H"},
+  {m:6,d:"Jul 10–12",s:["IMSA"],n:"Canadian Tire Motorsport Park",v:"Bowmanville, ON"},
+  {m:6,d:"Jul 12",s:["WEC"],n:"6 Hours of São Paulo",v:"Interlagos, BRA",t:"6H"},
+  {m:6,d:"Jul 17–19",s:["GTWCE"],n:"Sprint Cup round 5",v:"TBC",t:"Sprint"},
+  {m:6,d:"Jul 20",s:["INDYCAR"],n:"Music City Grand Prix",v:"Nashville Superspeedway, TN",t:"Oval"},
+  {m:6,d:"Jul 21",s:["INDYCAR"],n:"XPEL Grand Prix at Road America",v:"Road America, Elkhart Lake WI"},
+  {m:6,d:"Jul 30–Aug 2",s:["IMSA"],n:"Road America 6 Hours",v:"Road America, Elkhart Lake WI",t:"6H"},
+  {m:6,d:"Jul 31–Aug 2",s:["GTWCE"],n:"Sprint Cup round 6",v:"TBC",t:"Sprint"},
+  {m:7,d:"Aug 9",s:["INDYCAR"],n:"Grand Prix of Portland",v:"Portland International Raceway, OR"},
+  {m:7,d:"Aug 16",s:["INDYCAR"],n:"Indy at Markham",v:"Streets of Markham, ON"},
+  {m:7,d:"Aug 20–23",s:["IMSA"],n:"VIRginia International Raceway",v:"Alton, VA"},
+  {m:7,d:"Aug 23",s:["INDYCAR"],n:"Freedom 250 — Washington D.C.",v:"Washington D.C."},
+  {m:7,d:"Aug 28–30",s:["GTWCA"],n:"Road America",v:"Road America, Elkhart Lake WI"},
+  {m:7,d:"Aug 28–30",s:["GTWCE"],n:"Nürburgring",v:"Nürburgring, GER",t:"Sprint + 3H"},
+  {m:7,d:"Aug 29",s:["INDYCAR"],n:"Milwaukee Mile 250 — Race 1",v:"Milwaukee Mile, WI",t:"Oval"},
+  {m:7,d:"Aug 30",s:["INDYCAR"],n:"Milwaukee Mile 250 — Race 2",v:"Milwaukee Mile, WI",t:"Oval"},
+  {m:8,d:"Sep 6",s:["INDYCAR"],n:"Grand Prix of Monterey",v:"WeatherTech Raceway Laguna Seca, CA"},
+  {m:8,d:"Sep 6",s:["WEC"],n:"Lone Star Le Mans",v:"Circuit of the Americas, Austin TX",t:"6H"},
+  {m:8,d:"Sep 11–13",s:["IGTC"],n:"Suzuka 1000km",v:"Suzuka International Circuit, JPN",t:"~6H"},
+  {m:8,d:"Sep 18–20",s:["IMSA"],n:"Battle on the Bricks",v:"Indianapolis Motor Speedway, IN"},
+  {m:8,d:"Sep 18–20",s:["GTWCE"],n:"Sprint Cup round 8",v:"TBC",t:"Sprint"},
+  {m:8,d:"Sep 25–27",s:["GTWCA"],n:"Barber Motorsports Park",v:"Birmingham, AL"},
+  {m:8,d:"Sep TBC",s:["ELMS"],n:"4 Hours of Silverstone",v:"Silverstone Circuit, GBR",t:"4H"},
+  {m:8,d:"Sep 27",s:["WEC"],n:"6 Hours of Fuji",v:"Fuji Speedway, JPN",t:"6H"},
+  {m:9,d:"Oct 1–3",s:["IMSA"],n:"Petit Le Mans",v:"Road Atlanta, Braselton GA",t:"10H"},
+  {m:9,d:"Oct 2–4",s:["GTWCE"],n:"Sprint Cup round 9",v:"TBC",t:"Sprint"},
+  {m:9,d:"Oct 8–10",s:["IGTC","GTWCA"],n:"Indianapolis 8 Hour",v:"Indianapolis Motor Speedway, IN",t:"8H"},
+  {m:9,d:"Oct 10",s:["ELMS"],n:"4 Hours of Portimão",v:"Algarve International Circuit, POR",t:"4H"},
+  {m:9,d:"Oct 16–18",s:["GTWCE"],n:"Portimão",v:"Algarve International Circuit, POR",t:"3H EC"},
+  {m:9,d:"Oct 24",s:["WEC"],n:"Qatar 1812 Km",v:"Lusail International Circuit, QAT",t:"~8H"},
+  {m:10,d:"Nov 7",s:["WEC"],n:"8 Hours of Bahrain",v:"Bahrain International Circuit, BHR",t:"8H"},
+];
+
+R.forEach(r=>{
+  const keys=[...new Set(r.s.flatMap(s=>SW[s]||[]))];
+  r.w=keys;
+  r.ytUrl=null;
+  for(const ser of r.s){if(SYT[ser]){r.ytUrl=SYT[ser];break;}}
+});
+
+const rgba=(hex,a)=>{const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return`rgba(${r},${g},${b},${a})`;};
+
+let activeS=Object.fromEntries(Object.keys(S).map(k=>[k,true]));
+let activeW=Object.fromEntries(Object.keys(W).map(k=>[k,false]));
+
+function anyWActive(){return Object.values(activeW).some(Boolean);}
+
+function visible(){
+  return R.filter(r=>{
+    const sOk=r.s.some(s=>activeS[s]);
+    const wOk=!anyWActive()||r.w.some(w=>activeW[w]);
+    return sOk&&wOk;
+  });
+}
+
+function renderFilters(){
+  document.getElementById('sf').innerHTML=Object.entries(S).map(([k,v])=>`
+    <button onclick="toggleS('${k}')" style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;cursor:pointer;font-size:12px;font-weight:500;font-family:var(--font-sans);border:0.5px solid ${activeS[k]?rgba(v.c,0.5):'var(--color-border-tertiary)'};background:${activeS[k]?rgba(v.c,0.1):'transparent'};color:${activeS[k]?v.c:'var(--color-text-tertiary)'};">
+      <span style="width:7px;height:7px;border-radius:50%;background:${activeS[k]?v.c:'var(--color-border-secondary)'}"></span>${v.label}
+    </button>`).join('');
+  document.getElementById('wf').innerHTML=Object.entries(W).map(([k,v])=>`
+    <button onclick="toggleW('${k}')" style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;cursor:pointer;font-size:12px;font-weight:500;font-family:var(--font-sans);border:0.5px solid ${activeW[k]?rgba(v.c,0.6):'var(--color-border-tertiary)'};background:${activeW[k]?rgba(v.c,0.12):'transparent'};color:${activeW[k]?v.c:'var(--color-text-tertiary)'};">
+      <i class="ti ${v.icon}" style="font-size:13px;" aria-hidden="true"></i>${v.label}
+    </button>`).join('');
+}
+
+function renderCalendar(){
+  const vis=visible();
+  const remaining=vis.filter(r=>!r.done).length;
+  const wNote=anyWActive()?` · filtered by broadcaster`:'';
+  document.getElementById('stats').textContent=`${vis.length} events · ${remaining} remaining${wNote}`;
+
+  const byMonth={};
+  vis.forEach((r,i)=>{(byMonth[r.m]=byMonth[r.m]||[]).push({...r,_id:`${r.m}_${i}`});});
+
+  if(!Object.keys(byMonth).length){
+    document.getElementById('calendar').innerHTML='<p style="color:var(--color-text-tertiary);font-size:14px;text-align:center;padding:32px 0;">No events match the selected filters.</p>';
+    return;
+  }
+
+  document.getElementById('calendar').innerHTML=Object.entries(byMonth)
+    .sort(([a],[b])=>+a-+b)
+    .map(([m,races])=>`
+      <div style="margin-top:18px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+          <span style="font-size:11px;font-weight:500;color:var(--color-text-secondary);letter-spacing:0.08em;text-transform:uppercase;">${MONTHS[+m]}</span>
+          <div style="flex:1;height:0.5px;background:var(--color-border-tertiary);"></div>
+          <span style="font-size:11px;color:var(--color-text-tertiary);">${races.length}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:5px;">
+          ${races.map(r=>{
+            const col=S[r.s[0]].c;
+            const watchBadges=r.w.map(wk=>{
+              const wb=W[wk];
+              const url=wk==='yt'?(r.ytUrl||'https://www.youtube.com'):wb.url;
+              return `<a href="${url}" style="display:inline-flex;align-items:center;gap:3px;font-size:10px;padding:1px 6px;background:${rgba(wb.c,0.1)};border:0.5px solid ${rgba(wb.c,0.4)};color:${wb.c};border-radius:3px;text-decoration:none;cursor:pointer;">
+                <i class="ti ${wb.icon}" style="font-size:11px;" aria-hidden="true"></i>${wb.label}
+              </a>`;
+            }).join('');
+            return `<div style="background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-left:3px solid ${r.done?'var(--color-border-tertiary)':col};border-radius:0;padding:8px 10px 8px;opacity:${r.done?0.35:1};">
+              <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px;">
+                ${r.s.map(s=>`<span style="font-size:10px;font-weight:500;padding:1px 6px;background:${rgba(S[s].c,0.1)};border:0.5px solid ${rgba(S[s].c,0.4)};color:${S[s].c};border-radius:3px;">${S[s].label}</span>`).join('')}
+                ${r.t?`<span style="font-size:10px;padding:1px 6px;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);color:var(--color-text-tertiary);border-radius:3px;">${r.t}</span>`:''}
+              </div>
+              <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);line-height:1.25;margin-bottom:4px;">${r.n}</div>
+              <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:${r.done?0:5}px;">${r.d} · ${r.v}</div>
+              ${!r.done?`<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:2px;">${watchBadges}</div>`:''}
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`).join('');
+}
+
+function render(){renderFilters();renderCalendar();}
+function toggleS(k){activeS[k]=!activeS[k];render();}
+function toggleW(k){activeW[k]=!activeW[k];render();}
+function toggleAllS(){const on=Object.values(activeS).every(Boolean);Object.keys(activeS).forEach(k=>activeS[k]=!on);render();}
+
+render();
+</script>
