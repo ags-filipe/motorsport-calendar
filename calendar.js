@@ -110,7 +110,6 @@ RACES.forEach(r => {
 
 let activeS = Object.fromEntries(Object.keys(SERIES).map(k => [k, true]));
 let activeW = Object.fromEntries(Object.keys(WATCH).map(k => [k, false]));
-let currentMonth = new Date().getMonth();
 
 function anyWActive() {
   return Object.values(activeW).some(Boolean);
@@ -138,36 +137,6 @@ function renderFilters() {
     </button>`).join('');
 }
 
-function visibleMonths() {
-  return [...new Set(visible().map(r => r.m))].sort((a, b) => a - b);
-}
-
-function renderNav() {
-  const months = visibleMonths();
-  const idx    = months.indexOf(currentMonth);
-  const hasPrev = idx > 0;
-  const hasNext = idx < months.length - 1;
-
-  document.getElementById('month-nav').innerHTML = months.length ? `
-    <div class="month-nav">
-      <button class="month-nav__btn" onclick="prevMonth()" ${hasPrev ? '' : 'disabled'} aria-label="Previous month">&#8592;</button>
-      <span class="month-nav__heading">${MONTHS[currentMonth]} 2026</span>
-      <button class="month-nav__btn" onclick="nextMonth()" ${hasNext ? '' : 'disabled'} aria-label="Next month">&#8594;</button>
-    </div>` : '';
-}
-
-function prevMonth() {
-  const months = visibleMonths();
-  const idx = months.indexOf(currentMonth);
-  if (idx > 0) { currentMonth = months[idx - 1]; render(); }
-}
-
-function nextMonth() {
-  const months = visibleMonths();
-  const idx = months.indexOf(currentMonth);
-  if (idx < months.length - 1) { currentMonth = months[idx + 1]; render(); }
-}
-
 function renderCalendar() {
   const vis   = visible();
   const wNote = anyWActive() ? ' · filtered by broadcaster' : '';
@@ -181,23 +150,19 @@ function renderCalendar() {
     return;
   }
 
-  const races = byMonth[currentMonth];
-  if (!races) {
-    document.getElementById('calendar').innerHTML = '<p class="empty-state">No events this month.</p>';
-    return;
-  }
-
-  document.getElementById('calendar').innerHTML = `
-    <div class="month-block">
-      <div class="month-header">
-        <span class="month-name">${MONTHS[currentMonth]}</span>
-        <div class="month-divider"></div>
-        <span class="month-count">${races.length}</span>
-      </div>
-      <div class="event-grid">
-        ${races.map(renderCard).join('')}
-      </div>
-    </div>`;
+  document.getElementById('calendar').innerHTML = Object.entries(byMonth)
+    .sort(([a], [b]) => +a - +b)
+    .map(([m, races]) => `
+      <div class="month-block">
+        <div class="month-header">
+          <span class="month-name">${MONTHS[+m]}</span>
+          <div class="month-divider"></div>
+          <span class="month-count">${races.length}</span>
+        </div>
+        <div class="event-grid">
+          ${races.map(renderCard).join('')}
+        </div>
+      </div>`).join('');
 }
 
 function renderCard(r) {
@@ -226,16 +191,7 @@ function renderCard(r) {
     </div>`;
 }
 
-function render() {
-  const months = visibleMonths();
-  if (months.length && !months.includes(currentMonth)) {
-    currentMonth = months.reduce((best, m) =>
-      Math.abs(m - currentMonth) < Math.abs(best - currentMonth) ? m : best);
-  }
-  renderFilters();
-  renderNav();
-  renderCalendar();
-}
+function render() { renderFilters(); renderCalendar(); }
 function toggleS(k)  { activeS[k] = !activeS[k]; render(); }
 function toggleW(k)  { activeW[k] = !activeW[k]; render(); }
 function toggleAllS() {

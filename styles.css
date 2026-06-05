@@ -146,46 +146,6 @@ button { font-family: var(--font-sans); }
   border-color: var(--border);
 }
 
-/* ===== Month navigation ===== */
-.month-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 4px 0 16px;
-}
-
-.month-nav__heading {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  letter-spacing: -0.01em;
-}
-
-.month-nav__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-sm);
-  border: 0.5px solid var(--border-muted);
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 16px;
-  cursor: pointer;
-  transition: color 0.1s, border-color 0.1s;
-}
-
-.month-nav__btn:hover:not(:disabled) {
-  color: var(--text-primary);
-  border-color: var(--border);
-}
-
-.month-nav__btn:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
 /* ===== Month ===== */
 .month-block {
   margin-top: 20px;
