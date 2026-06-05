@@ -39,31 +39,31 @@ const MONTHS = [
 ];
 
 const RACES = [
-  {m:0, d:"Jan 21–25",    s:["IMSA"],          n:"Rolex 24 at Daytona",              v:"Daytona International Speedway, FL",   t:"24H",        done:1},
-  {m:1, d:"Feb 13–15",    s:["IGTC"],          n:"Bathurst 12 Hour",                 v:"Mount Panorama, AUS",                  t:"12H",        done:1},
-  {m:2, d:"Mar 1",        s:["INDYCAR"],        n:"Firestone GP of St. Petersburg",   v:"St. Petersburg, FL",                                   done:1},
-  {m:2, d:"Mar 7",        s:["INDYCAR"],        n:"Good Ranchers 250",                v:"Phoenix Raceway, AZ",                  t:"Oval",       done:1},
-  {m:2, d:"Mar 15",       s:["INDYCAR"],        n:"Grand Prix of Arlington",          v:"Streets of Arlington, TX",                             done:1},
-  {m:2, d:"Mar 18–21",    s:["IMSA"],           n:"12 Hours of Sebring",              v:"Sebring International Raceway, FL",    t:"12H",        done:1},
-  {m:2, d:"Mar 27–29",    s:["GTWCA"],          n:"Sonoma",                           v:"Sonoma Raceway, CA",                                   done:1},
-  {m:2, d:"Mar 29",       s:["INDYCAR"],        n:"Alabama Indy Grand Prix",          v:"Barber Motorsports Park, AL",                          done:1},
-  {m:3, d:"Apr 10–12",    s:["GTWCE"],          n:"Paul Ricard",                      v:"Le Castellet, FRA",                    t:"Sprint + 6H",done:1},
-  {m:3, d:"Apr 12",       s:["ELMS"],           n:"4 Hours of Barcelona",             v:"Circuit de Barcelona-Catalunya",       t:"4H",         done:1},
-  {m:3, d:"Apr 17–18",    s:["IMSA"],           n:"Grand Prix of Long Beach",         v:"Long Beach, CA",                                       done:1},
-  {m:3, d:"Apr 19",       s:["INDYCAR"],        n:"Acura Grand Prix of Long Beach",   v:"Long Beach, CA",                                       done:1},
-  {m:3, d:"Apr 19",       s:["WEC"],            n:"6 Hours of Imola",                 v:"Imola, ITA",                           t:"6H",         done:1},
-  {m:3, d:"Apr 24–26",    s:["GTWCA"],          n:"Circuit of the Americas",          v:"Austin, TX",                                           done:1},
-  {m:4, d:"May 1–3",      s:["IMSA"],           n:"Laguna Seca",                      v:"WeatherTech Raceway, CA",                              done:1},
-  {m:4, d:"May 2–3",      s:["GTWCE"],          n:"Brands Hatch",                     v:"Brands Hatch, GBR",                    t:"Sprint",     done:1},
-  {m:4, d:"May 3",        s:["ELMS"],           n:"4 Hours of Le Castellet",          v:"Circuit Paul Ricard, FRA",             t:"4H",         done:1},
-  {m:4, d:"May 7–9",      s:["WEC"],            n:"6 Hours of Spa-Francorchamps",     v:"Spa-Francorchamps, BEL",               t:"6H",         done:1},
-  {m:4, d:"May 8–10",     s:["GTWCA"],          n:"Sebring",                          v:"Sebring International Raceway, FL",                    done:1},
-  {m:4, d:"May 9",        s:["INDYCAR"],        n:"Sonsio Grand Prix",                v:"Indianapolis Road Course, IN",                         done:1},
-  {m:4, d:"May 14–17",    s:["IGTC"],           n:"Nürburgring 24 Hours",             v:"Nürburgring Nordschleife, GER",        t:"24H",        done:1},
-  {m:4, d:"May 24",       s:["INDYCAR"],        n:"Indianapolis 500",                 v:"Indianapolis Motor Speedway, IN",      t:"500mi",      done:1},
-  {m:4, d:"May 28–31",    s:["GTWCE"],          n:"Monza",                            v:"Autodromo Nazionale Monza, ITA",       t:"Sprint + 3H",done:1},
-  {m:4, d:"May 29–30",    s:["IMSA"],           n:"Detroit Grand Prix",               v:"Detroit Street Circuit, MI",                           done:1},
-  {m:4, d:"May 31",       s:["INDYCAR"],        n:"Chevrolet Detroit Grand Prix",     v:"Detroit Street Circuit, MI",                           done:1},
+  {m:0, d:"Jan 21–25",    s:["IMSA"],          n:"Rolex 24 at Daytona",              v:"Daytona International Speedway, FL",   t:"24H",        },
+  {m:1, d:"Feb 13–15",    s:["IGTC"],          n:"Bathurst 12 Hour",                 v:"Mount Panorama, AUS",                  t:"12H",        },
+  {m:2, d:"Mar 1",        s:["INDYCAR"],        n:"Firestone GP of St. Petersburg",   v:"St. Petersburg, FL",                                   },
+  {m:2, d:"Mar 7",        s:["INDYCAR"],        n:"Good Ranchers 250",                v:"Phoenix Raceway, AZ",                  t:"Oval",       },
+  {m:2, d:"Mar 15",       s:["INDYCAR"],        n:"Grand Prix of Arlington",          v:"Streets of Arlington, TX",                             },
+  {m:2, d:"Mar 18–21",    s:["IMSA"],           n:"12 Hours of Sebring",              v:"Sebring International Raceway, FL",    t:"12H",        },
+  {m:2, d:"Mar 27–29",    s:["GTWCA"],          n:"Sonoma",                           v:"Sonoma Raceway, CA",                                   },
+  {m:2, d:"Mar 29",       s:["INDYCAR"],        n:"Alabama Indy Grand Prix",          v:"Barber Motorsports Park, AL",                          },
+  {m:3, d:"Apr 10–12",    s:["GTWCE"],          n:"Paul Ricard",                      v:"Le Castellet, FRA",                    t:"Sprint + 6H",},
+  {m:3, d:"Apr 12",       s:["ELMS"],           n:"4 Hours of Barcelona",             v:"Circuit de Barcelona-Catalunya",       t:"4H",         },
+  {m:3, d:"Apr 17–18",    s:["IMSA"],           n:"Grand Prix of Long Beach",         v:"Long Beach, CA",                                       },
+  {m:3, d:"Apr 19",       s:["INDYCAR"],        n:"Acura Grand Prix of Long Beach",   v:"Long Beach, CA",                                       },
+  {m:3, d:"Apr 19",       s:["WEC"],            n:"6 Hours of Imola",                 v:"Imola, ITA",                           t:"6H",         },
+  {m:3, d:"Apr 24–26",    s:["GTWCA"],          n:"Circuit of the Americas",          v:"Austin, TX",                                           },
+  {m:4, d:"May 1–3",      s:["IMSA"],           n:"Laguna Seca",                      v:"WeatherTech Raceway, CA",                              },
+  {m:4, d:"May 2–3",      s:["GTWCE"],          n:"Brands Hatch",                     v:"Brands Hatch, GBR",                    t:"Sprint",     },
+  {m:4, d:"May 3",        s:["ELMS"],           n:"4 Hours of Le Castellet",          v:"Circuit Paul Ricard, FRA",             t:"4H",         },
+  {m:4, d:"May 7–9",      s:["WEC"],            n:"6 Hours of Spa-Francorchamps",     v:"Spa-Francorchamps, BEL",               t:"6H",         },
+  {m:4, d:"May 8–10",     s:["GTWCA"],          n:"Sebring",                          v:"Sebring International Raceway, FL",                    },
+  {m:4, d:"May 9",        s:["INDYCAR"],        n:"Sonsio Grand Prix",                v:"Indianapolis Road Course, IN",                         },
+  {m:4, d:"May 14–17",    s:["IGTC"],           n:"Nürburgring 24 Hours",             v:"Nürburgring Nordschleife, GER",        t:"24H",        },
+  {m:4, d:"May 24",       s:["INDYCAR"],        n:"Indianapolis 500",                 v:"Indianapolis Motor Speedway, IN",      t:"500mi",      },
+  {m:4, d:"May 28–31",    s:["GTWCE"],          n:"Monza",                            v:"Autodromo Nazionale Monza, ITA",       t:"Sprint + 3H",},
+  {m:4, d:"May 29–30",    s:["IMSA"],           n:"Detroit Grand Prix",               v:"Detroit Street Circuit, MI",                           },
+  {m:4, d:"May 31",       s:["INDYCAR"],        n:"Chevrolet Detroit Grand Prix",     v:"Detroit Street Circuit, MI",                           },
   {m:5, d:"Jun 7",        s:["INDYCAR"],        n:"Bommarito Automotive Group 500",   v:"WWT Raceway, Madison IL",              t:"Oval"},
   {m:5, d:"Jun 10–14",    s:["WEC"],            n:"24 Hours of Le Mans",              v:"Circuit de la Sarthe, FRA",            t:"24H"},
   {m:5, d:"Jun 12–14",    s:["GTWCA"],          n:"Road Atlanta",                     v:"Road Atlanta, GA"},
@@ -110,6 +110,7 @@ RACES.forEach(r => {
 
 let activeS = Object.fromEntries(Object.keys(SERIES).map(k => [k, true]));
 let activeW = Object.fromEntries(Object.keys(WATCH).map(k => [k, false]));
+let currentMonth = new Date().getMonth();
 
 function anyWActive() {
   return Object.values(activeW).some(Boolean);
@@ -137,11 +138,40 @@ function renderFilters() {
     </button>`).join('');
 }
 
+function visibleMonths() {
+  return [...new Set(visible().map(r => r.m))].sort((a, b) => a - b);
+}
+
+function renderNav() {
+  const months = visibleMonths();
+  const idx    = months.indexOf(currentMonth);
+  const hasPrev = idx > 0;
+  const hasNext = idx < months.length - 1;
+
+  document.getElementById('month-nav').innerHTML = months.length ? `
+    <div class="month-nav">
+      <button class="month-nav__btn" onclick="prevMonth()" ${hasPrev ? '' : 'disabled'} aria-label="Previous month">&#8592;</button>
+      <span class="month-nav__heading">${MONTHS[currentMonth]} 2026</span>
+      <button class="month-nav__btn" onclick="nextMonth()" ${hasNext ? '' : 'disabled'} aria-label="Next month">&#8594;</button>
+    </div>` : '';
+}
+
+function prevMonth() {
+  const months = visibleMonths();
+  const idx = months.indexOf(currentMonth);
+  if (idx > 0) { currentMonth = months[idx - 1]; render(); }
+}
+
+function nextMonth() {
+  const months = visibleMonths();
+  const idx = months.indexOf(currentMonth);
+  if (idx < months.length - 1) { currentMonth = months[idx + 1]; render(); }
+}
+
 function renderCalendar() {
-  const vis       = visible();
-  const remaining = vis.filter(r => !r.done).length;
-  const wNote     = anyWActive() ? ' · filtered by broadcaster' : '';
-  document.getElementById('stats').textContent = `${vis.length} events · ${remaining} remaining${wNote}`;
+  const vis   = visible();
+  const wNote = anyWActive() ? ' · filtered by broadcaster' : '';
+  document.getElementById('stats').textContent = `${vis.length} events${wNote}`;
 
   const byMonth = {};
   vis.forEach(r => { (byMonth[r.m] ??= []).push(r); });
@@ -151,19 +181,23 @@ function renderCalendar() {
     return;
   }
 
-  document.getElementById('calendar').innerHTML = Object.entries(byMonth)
-    .sort(([a], [b]) => +a - +b)
-    .map(([m, races]) => `
-      <div class="month-block">
-        <div class="month-header">
-          <span class="month-name">${MONTHS[+m]}</span>
-          <div class="month-divider"></div>
-          <span class="month-count">${races.length}</span>
-        </div>
-        <div class="event-grid">
-          ${races.map(renderCard).join('')}
-        </div>
-      </div>`).join('');
+  const races = byMonth[currentMonth];
+  if (!races) {
+    document.getElementById('calendar').innerHTML = '<p class="empty-state">No events this month.</p>';
+    return;
+  }
+
+  document.getElementById('calendar').innerHTML = `
+    <div class="month-block">
+      <div class="month-header">
+        <span class="month-name">${MONTHS[currentMonth]}</span>
+        <div class="month-divider"></div>
+        <span class="month-count">${races.length}</span>
+      </div>
+      <div class="event-grid">
+        ${races.map(renderCard).join('')}
+      </div>
+    </div>`;
 }
 
 function renderCard(r) {
@@ -175,7 +209,7 @@ function renderCard(r) {
 
   const formatBadge = r.t ? `<span class="badge badge--format">${r.t}</span>` : '';
 
-  const watchBadges = r.done ? '' : r.w.map(wk => {
+  const watchBadges = r.w.map(wk => {
     const wb  = WATCH[wk];
     const url = wk === 'yt' ? (r.ytUrl ?? 'https://www.youtube.com') : wb.url;
     return `<a class="badge badge--watch" href="${url}" style="--watch-color:${wb.c}" target="_blank" rel="noopener">
@@ -184,7 +218,7 @@ function renderCard(r) {
   }).join('');
 
   return `
-    <div class="event-card${r.done ? ' event-card--done' : ''}" style="--series-color:${primaryColor}">
+    <div class="event-card" style="--series-color:${primaryColor}">
       <div class="event-card__badges">${seriesBadges}${formatBadge}</div>
       <div class="event-card__name">${r.n}</div>
       <div class="event-card__meta">${r.d} · ${r.v}</div>
@@ -192,7 +226,16 @@ function renderCard(r) {
     </div>`;
 }
 
-function render()    { renderFilters(); renderCalendar(); }
+function render() {
+  const months = visibleMonths();
+  if (months.length && !months.includes(currentMonth)) {
+    currentMonth = months.reduce((best, m) =>
+      Math.abs(m - currentMonth) < Math.abs(best - currentMonth) ? m : best);
+  }
+  renderFilters();
+  renderNav();
+  renderCalendar();
+}
 function toggleS(k)  { activeS[k] = !activeS[k]; render(); }
 function toggleW(k)  { activeW[k] = !activeW[k]; render(); }
 function toggleAllS() {
